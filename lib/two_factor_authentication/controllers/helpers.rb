@@ -21,10 +21,9 @@ module TwoFactorAuthentication
 
       def handle_failed_second_factor(scope)
         if request.format.present? and request.format.html?
-          session["#{scope}_return_to"] = request.original_fullpath if request.get?
-          redirect_to two_factor_authentication_path_for(scope)
+          redirect_to :root
         else
-          render nothing: true, status: :unauthorized
+          render :json => {:status => 'codeRequired'}, :status => :unauthorized
         end
       end
 
